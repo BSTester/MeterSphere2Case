@@ -75,7 +75,7 @@ class MeterSphereParser(object):
                     url = url.replace(v, '${}'.format(v[2:-2]))
                 request["headers"] = self.parse_header(item["headers"], api)
 
-                body = {}
+                body = item.get("body") or {}
                 if item.get("body") and isinstance(item["body"], list):
                     try:
                         mode_body = item["body"][0]
@@ -85,18 +85,15 @@ class MeterSphereParser(object):
                         body = json.loads(mode_body)
                     except Exception as e:
                         body = mode_body
-                elif item.get("body") and isinstance(item["body"], dict):
-                    body = item["body"]
-                    if request["headers"].get('Content-Type', '').find('json') < 0:
-                        mode_body = ''
-                        for k, v in body.items():
-                            mode_body += '{}={}&'.format(k, v)
-                        body = mode_body[:-1]
-                if isinstance(body, dict) or request["headers"].get('Content-Type', '').find('json') >= 0:
-                    request["json"] = body
-                else:
+                if not request["headers"].get('Content-Type'):
+                    if isinstance(body, (dict, list)):
+                        request["json"] = body
+                    else:
+                        request["data"] = body
+                elif request["headers"].get('Content-Type').find('json') < 0:
                     request["data"] = body
-
+                else:
+                    request["json"] = body
             for var in variable:
                 if var.get('key'): api['config']["variables"][var.get('key')] = var.get('value')
             api["teststeps"].append(dict(name=url_split.path, request=request, validate=[dict(eq=['status_code', 200]), dict(eq=['body.code', 0])]))
