@@ -2,6 +2,8 @@
 
 Convert MeterSphere data to JSON testcases for HttpRunner.
 
+[Click here](https://github.com/metersphere/chrome-extensions)  download the chrome plugin 
+
 ## usage
 
 To see ``MeterSphere2Case`` version:
