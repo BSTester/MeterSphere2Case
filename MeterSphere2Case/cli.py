@@ -9,7 +9,7 @@ from MeterSphere2Case.core import MeterSphereParser
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Convert MeterSphere testcases to JSON testcases for HttpRunner.")
+        description="Convert MeterSphere testcases to yaml testcases for HttpRunner.")
     parser.add_argument("-V", "--version", dest='version', action='store_true',
         help="show version")
     parser.add_argument('--log-level', default='INFO',

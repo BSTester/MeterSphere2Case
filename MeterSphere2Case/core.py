@@ -113,13 +113,13 @@ class MeterSphereParser(object):
     def parse_data(self):
         """ dump MeterSphere data to json testset
         """
-        logging.info("Start to generate JSON testset.")
+        logging.info("Start to generate yaml testset.")
         MeterSphere_data = self.read_MeterSphere_data()
         name = self.MeterSphere_testcase_file.split(os.sep)[-1].replace('.json', '')
         result = self.parse_items(MeterSphere_data, name)
         return result, name
 
-    def save(self, data, output_dir, output_file_type="json", name=''):
+    def save(self, data, output_dir, output_file_type="yaml", name=''):
         count = 0
         output_dir = os.path.join(output_dir, "TestCases", "APICase")
         if not os.path.exists(output_dir):
