@@ -1,0 +1,5 @@
+*.pyc
+.DS_Store
+dist
+__pycache__
+ms2case.egg-info
