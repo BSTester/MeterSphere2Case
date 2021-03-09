@@ -50,7 +50,7 @@ class MeterSphereParser(object):
         api['config']["name"] = name
         api['config']["variables"] = dict()
 
-        for name, item in items.items():
+        for _, item in items.items():
             request = {}
             request["method"] = item["method"]
 
@@ -102,6 +102,7 @@ class MeterSphereParser(object):
     def parse_items(self, items, folder_name=None, variable=[]):
         result = []
         for folder, cases in items.items():
+            folder = folder.replace('[', '').replace(']', '').replace(' ', '_')
             api = self.parse_each_item(folder, cases, variable)
             api["folder_name"] = os.path.join(folder_name, folder)
             result.append(api)
