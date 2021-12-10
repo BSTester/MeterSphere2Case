@@ -86,7 +86,7 @@ class MeterSphereParser(object):
                         request["json"] = body
                     else:
                         request["data"] = body
-                elif request["headers"].get('Content-Type').find('json') < 0:
+                elif request["headers"].get('Content-Type').find('json') < 0 and api['config']["variables"].get('content_type', '').find('json') < 0:
                     request["data"] = body
                 else:
                     request["json"] = body
