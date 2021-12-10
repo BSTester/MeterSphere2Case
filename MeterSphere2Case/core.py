@@ -34,13 +34,9 @@ class MeterSphereParser(object):
         for header in request_header:
             key = header["name"]
             value = header["value"]
-            for v in re.findall(r'\{\{.+?\}\}', key):
-                api['config']["variables"][v[2:-2]] = ''
-                key = key.replace(v, '${}'.format(v[2:-2]))
-            for v in re.findall(r'\{\{.+?\}\}', value):
-                api['config']["variables"][v[2:-2]] = ''
-                value = value.replace(v, '${}'.format(v[2:-2]))
-            headers[key] = value
+            vKey = re.sub(r'\W+', '_', key).lower()
+            api['config']["variables"][vKey] = parse_value_from_type(value, api)
+            headers[key] = "${}".format(vKey)
         return headers
 
     def parse_each_item(self, name, items, variable=[]):
